@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+
+        <reference name="head">
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/devils/auth/jquery-1.11.0.min.js</name>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/devils/auth/auth.js</name>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/devils/auth/window.js</name>
+            </action>
+            <block type="devils_auth/auth" template="devils/auth/js.phtml"></block>
+        </reference>
+
+    </default>
+</layout>

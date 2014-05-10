@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Devils_Auth>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Devils_Auth>
+    </modules>
+</config>
