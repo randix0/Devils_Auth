@@ -11,7 +11,7 @@ Window = {
         'onResize': []
     },
     deferred: [],
-    params: {'indicator': '/resources/img/misc/ajax-loader.gif', 'width': 500, 'dimmer': true, 'zindex': 10000},
+    params: {'indicator': '/images/misc/ajax-loader.gif', 'width': 500, 'dimmer': true, 'zindex': 10000},
     instances: [],
     wCounter: 0,
     mwWidth: 0,

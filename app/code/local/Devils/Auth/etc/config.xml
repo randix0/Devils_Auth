@@ -95,16 +95,16 @@
                 <display>0</display>
             </general>
             <facebook>
-                <app_id>631037920310630</app_id>
-                <app_secret>e83c0a104e0a8cd4b04291a52cb678eb</app_secret>
+                <app_id></app_id>
+                <app_secret></app_secret>
             </facebook>
             <google>
-                <app_id>20534465084-hkfonugh18bilqb3peld0dus3c1j5ava.apps.googleusercontent.com</app_id>
-                <app_secret>347dKTKIAA86NU3Dun9GsNVF</app_secret>
+                <app_id></app_id>
+                <app_secret></app_secret>
             </google>
             <vkontakte>
-                <app_id>4354178</app_id>
-                <app_secret>iWotttDMum51W3VNGjLZ</app_secret>
+                <app_id></app_id>
+                <app_secret></app_secret>
             </vkontakte>
         </devils_auth>
     </default>

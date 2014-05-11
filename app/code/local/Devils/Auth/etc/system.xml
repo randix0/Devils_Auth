@@ -1,0 +1,204 @@
+<?xml version="1.0"?>
+<config>
+	<tabs>
+		<devils translate="label" module="devils_auth">
+			<label>Devils</label>
+			<sort_order>1000</sort_order>
+		</devils>
+	</tabs>
+	
+	<sections>
+		<devils_auth translate="label" module="devils_auth">
+			<class>separator-top</class>
+			<label>Auth configuration</label>
+			<tab>devils</tab>
+			<sort_order>100</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+			<groups>
+                <general translate="label" module="devils_auth">
+                    <label>General Settings</label>
+					<frontend_type>select</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <!--
+                    <fields>
+                    	<show_notice>
+                    		<label>Show Quantity Warning</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<comment>
+                				<![CDATA[Show the flag when a products option is below a specific threshold.]]>
+							</comment>
+							<sort_order>10</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                    	</show_notice>
+                    	<notice translate="label">
+							<label>Quantity Threshold</label>
+							<frontend_type>text</frontend_type>
+							<comment>
+                				<![CDATA[Maximum quantity at which to show the &quot;# left!&quot; notice. Note that an option with a quantity of 0 does not display the notice as it is a disabled option.]]>
+							</comment>
+							<depends>
+								<show_notice>1</show_notice>
+							</depends>
+							<validate>validate-greater-than-zero validate-number required-entry</validate>
+							<sort_order>20</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</notice>
+						<notice_msg>
+							<label>Quantity Warning Message</label>
+							<frontend_type>text</frontend_type>
+							<comment>
+                				<![CDATA[The message to show in the flag that appears below options that have a quantity below the threshold. Use %q in place of the actual quantity.]]>
+							</comment>
+							<depends>
+								<show_notice>1</show_notice>
+							</depends>
+							<sort_order>30</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</notice_msg>
+						<translate translate="label">
+							<label>Translate Sizes</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<comment>
+                				<![CDATA[Translate size option labels to an abbreviated size (i.e. - &quot;Extra-Large&quot; becomes &quot;XL&quot;). Recommended to leave this setting off and manually change this in the store view label of each size option.]]>
+							</comment>
+							<sort_order>40</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</translate>
+						<halo translate="label">
+							<label>Halo Color</label>
+							<frontend_type>text</frontend_type>
+							<comment>
+                				<![CDATA[The color to highlight each selected options box with. Any valid CSS color name/hex is acceptable. A good resource for CSS color names and/or hex codes can be found <a href="http://www.w3schools.com/cssref/css_colornames.asp" target="_blank">here</a>.]]>
+							</comment>
+							<sort_order>50</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</halo>
+						<display translate="label">
+							<label>Swatch Display</label>
+							<frontend_type>select</frontend_type>
+							<source_model>devils_auth/system_config_source_display</source_model>
+							<comment>
+                				<![CDATA[Whether to resize images to fit within the grid buttons, or keep the original dimensions and &quot;clip&quot; any part of the image that exceeds the frame of the button.]]>
+							</comment>
+							<sort_order>60</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</display>
+                    </fields>
+                    -->
+                </general>
+                <facebook>
+                    <label>Facebook</label>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <app_id translate="label">
+                            <label>App ID</label>
+                            <frontend_type>text</frontend_type>
+                            <comment>
+                                <![CDATA[]]>
+                            </comment>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </app_id>
+                        <app_secret>
+                            <label>App secret</label>
+                            <frontend_type>text</frontend_type>
+                            <comment>
+                                <![CDATA[]]>
+                            </comment>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </app_secret>
+                    </fields>
+                </facebook>
+                <google>
+                    <label>Google</label>
+                    <sort_order>30</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <app_id translate="label">
+                            <label>App ID</label>
+                            <frontend_type>text</frontend_type>
+                            <comment>
+                                <![CDATA[]]>
+                            </comment>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </app_id>
+                        <app_secret>
+                            <label>App secret</label>
+                            <frontend_type>text</frontend_type>
+                            <comment>
+                                <![CDATA[]]>
+                            </comment>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </app_secret>
+                    </fields>
+                </google>
+                <vkontakte>
+                    <label>Vkontakte</label>
+                    <sort_order>40</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <app_id translate="label">
+                            <label>App ID</label>
+                            <frontend_type>text</frontend_type>
+                            <comment>
+                                <![CDATA[]]>
+                            </comment>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </app_id>
+                        <app_secret>
+                            <label>App secret</label>
+                            <frontend_type>text</frontend_type>
+                            <comment>
+                                <![CDATA[]]>
+                            </comment>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </app_secret>
+                    </fields>
+                </vkontakte>
+			</groups>
+		</devils_auth>
+	</sections>
+</config>
