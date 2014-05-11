@@ -1,8 +1,10 @@
 <?xml version="1.0"?>
 <layout version="0.1.0">
     <default>
-
         <reference name="head">
+            <action method="addCss">
+                <stylesheet>css/devils/auth/window.css</stylesheet>
+            </action>
             <action method="addItem">
                 <type>skin_js</type>
                 <name>js/devils/auth/jquery-1.11.0.min.js</name>
@@ -17,6 +19,10 @@
             </action>
             <block type="devils_auth/auth" template="devils/auth/js.phtml"></block>
         </reference>
-
     </default>
+    <customer_account_login>
+        <reference name="content">
+            <block type="devils_auth/auth" before="-" template="devils/auth/auth_buttons.phtml"></block>
+        </reference>
+    </customer_account_login>
 </layout>

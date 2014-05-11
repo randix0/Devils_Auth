@@ -99,12 +99,12 @@
                 <app_secret>e83c0a104e0a8cd4b04291a52cb678eb</app_secret>
             </facebook>
             <google>
-                <app_id>294422244214.apps.googleusercontent.com</app_id>
-                <app_secret>AIzaSyB59t5t2uSe6U48_8tbRw1C9tM1w7zeuUU</app_secret>
+                <app_id>20534465084-hkfonugh18bilqb3peld0dus3c1j5ava.apps.googleusercontent.com</app_id>
+                <app_secret>347dKTKIAA86NU3Dun9GsNVF</app_secret>
             </google>
             <vkontakte>
-                <app_id>4348305</app_id>
-                <app_secret>kv4eIl5rZO1zyhMutzDT</app_secret>
+                <app_id>4354178</app_id>
+                <app_secret>iWotttDMum51W3VNGjLZ</app_secret>
             </vkontakte>
         </devils_auth>
     </default>
