@@ -1,5 +1,5 @@
 <?php
-class Devils_Auth_Helper_Oauth_Facebook extends Devils_Auth_Helper_Oauth_Abstract
+class Devils_Auth_Helper_Oauth_Soundcloud extends Devils_Auth_Helper_Oauth_Abstract
 {
     /**
      * Get segments file name
@@ -38,7 +38,7 @@ class Devils_Auth_Helper_Oauth_Facebook extends Devils_Auth_Helper_Oauth_Abstrac
 
             $response = NULL;
 
-            $url = 'https://graph.facebook.com/me?access_token='.$this->oa_access_token;
+            $url = 'https://api.soundcloud.com/me.json?access_token='.$this->oa_access_token;
 
             $contents = $this->_curlResponse($url);
 
@@ -67,33 +67,33 @@ class Devils_Auth_Helper_Oauth_Facebook extends Devils_Auth_Helper_Oauth_Abstrac
      * @return string
      */
     public function getAccessToken($code, $reason = '') {
-        $redirectUrn = 'auth/index/step1/handler/facebook/';
+        $redirectUrn = 'auth/index/step1/handler/soundcloud/';
         if ($reason) {
             $redirectUrn .= 'reason/' . $reason;
         }
         $redirectUri = Mage::getUrl($redirectUrn);
-        $tokenUrl = 'https://graph.facebook.com/oauth/access_token';
+
+        $tokenUrl	= 'https://api.soundcloud.com/oauth2/token';
         $data = array(
             'client_id' => $this->app_id,
             'client_secret' => $this->app_secret,
             'redirect_uri' => $redirectUri,
-            'code' => $code
+            'code' => $code,
+            'grant_type' => 'authorization_code'
         );
-
 
         $response = NULL;
 
-        $contents = $this->_curlResponse($tokenUrl, $data);
-
+        $contents = $this->_curlResponse($tokenUrl, $data, true);
         if($contents) {
-            parse_str($contents, $response);
+            $response = json_decode($contents, true);
         } else {
             throw new Exception('Connection error', CONNECTION_ERROR);
         }
 
         if($response && isset($response['access_token']) && $response['access_token']) {
             $this->oa_access_token	= $response['access_token'];
-            $this->oa_valid_till	= time() + $response['expires'];
+            $this->oa_valid_till	= time() + 3600;
             $this->oa_user_id		= $this->getUserID();
 
             return true;
@@ -134,15 +134,17 @@ class Devils_Auth_Helper_Oauth_Facebook extends Devils_Auth_Helper_Oauth_Abstrac
 
         if($response) {
             $this->oa_user_id = $response['id'];
+            $fullName = $response['full_name'];
+            $name = exclude(' ', $fullName);
 
             return array(
-                'first_name'		=> $response['first_name'],
-                'last_name'			=> $response['last_name'],
-                'url_friendly_name'	=> (isset($response['username'])?$response['username']:''),
+                'first_name'		=> $name[0],
+                'last_name'			=> $name[1],
+                'url_friendly_name'	=> (isset($response['permalink'])?$response['permalink']:''),
                 'email'				=> (isset($response['email']) && $response['email'] && isset($response['verified']) && $response['verified'])?$response['email']:'',
-                'timezone'			=> $response['timezone'],
-                'gender'			=> $response['gender']?(($response['gender']=='male')?2:1):0,
-                'facebook_id'		=> $response['id']
+                'timezone'			=> 0,
+                'gender'			=> 0,
+                'soundcloud_id'		=> $response['id']
             );
         }
 
@@ -158,8 +160,8 @@ class Devils_Auth_Helper_Oauth_Facebook extends Devils_Auth_Helper_Oauth_Abstrac
     public function getUserPhoto() {
         $response = $this->_connectAndGrabUserData();
 
-        if($response) {
-            return 'http://graph.facebook.com/'.$response['id'].'/picture?type=large';
+        if($response && isset($response['avatar_url']) && $response['avatar_url']) {
+            return $response['avatar_url'];
         }
 
         return false;

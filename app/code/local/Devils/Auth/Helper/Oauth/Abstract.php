@@ -23,14 +23,31 @@ abstract class Devils_Auth_Helper_Oauth_Abstract extends Mage_Core_Helper_Abstra
         return Mage::getSingleton('devils_auth/session');
     }
 
-    protected function _curlResponse($url)
+    protected function _curlResponse($url, $data = '', $post = false)
     {
+        $query = '';
+        if ($data) {
+            if (is_array($data)) {
+                $query = http_build_query($data);
+            } else {
+                $query = $data;
+            }
+
+            if (!$post) {
+                $url .= '?' . $query;
+            }
+        }
+
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_TIMEOUT, 5);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        if ($post) {
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $query);
+        }
         $response = curl_exec($ch);
         curl_close($ch);
 

@@ -33,12 +33,18 @@ class Devils_Auth_Helper_Oauth_Vkontakte extends Devils_Auth_Helper_Oauth_Abstra
             $redirectUrn .= 'reason/' . $reason;
         }
         $redirectUri = Mage::getUrl($redirectUrn);
-        $tokenUrl = 'https://api.vk.com/oauth/access_token?client_id='.$this->app_id . '&redirect_uri='
-            . urlencode($redirectUri) . '&client_secret=' . $this->app_secret . '&code=' . $code;
+
+        $tokenUrl = 'https://api.vk.com/oauth/access_token';
+        $data = array(
+            'client_id' => $this->app_id,
+            'client_secret' => $this->app_secret,
+            'redirect_uri' => $redirectUri,
+            'code' => $code
+        );
 
         $response = NULL;
 
-        $contents = $this->_curlResponse($tokenUrl);
+        $contents = $this->_curlResponse($tokenUrl, $data);
 
         if($contents) {
             $response = json_decode($contents);

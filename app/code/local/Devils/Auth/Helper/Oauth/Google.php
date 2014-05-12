@@ -35,22 +35,34 @@ class Devils_Auth_Helper_Oauth_Google extends Devils_Auth_Helper_Oauth_Abstract
         }
         $redirectUri = Mage::getUrl($redirectUrn);
 
+        $tokenUrl = 'https://accounts.google.com/o/oauth2/token';
+        $data = array(
+            'client_id' => $this->app_id,
+            'client_secret' => $this->app_secret,
+            'redirect_uri' => $redirectUri,
+            'code' => $code,
+            'grant_type' => authorization_code
+        );
+        /*
         $token_url	= 'https://accounts.google.com/o/oauth2/token';
         $data		= 'code='.$code.
             '&client_id='.$this->app_id.
             '&client_secret='.$this->app_secret.
             '&redirect_uri='. urlencode($redirectUri).
             '&grant_type=authorization_code';
+        */
 
 
         $response = NULL;
 
-        if($contents = @file_get_contents($token_url, false, stream_context_create(array('http'=>array(
+        $contents = $this->_curlResponse($tokenUrl, $data, true);
+
+        if($contents/* = @file_get_contents($token_url, false, stream_context_create(array('http'=>array(
             'method'	=>'POST',
             'header'	=> "Content-type: application/x-www-form-urlencoded\r\n".
                 "Content-Length: " . strlen($data) . "\r\n",
             'content'	=>$data
-        ))))) {
+        ))))*/) {
 
             $response = json_decode($contents, true);
 

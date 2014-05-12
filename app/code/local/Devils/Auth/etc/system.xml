@@ -198,6 +198,37 @@
                         </app_secret>
                     </fields>
                 </vkontakte>
+                <soundcloud>
+                    <label>Soundcloud</label>
+                    <sort_order>50</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <app_id translate="label">
+                            <label>App ID</label>
+                            <frontend_type>text</frontend_type>
+                            <comment>
+                                <![CDATA[]]>
+                            </comment>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </app_id>
+                        <app_secret>
+                            <label>App secret</label>
+                            <frontend_type>text</frontend_type>
+                            <comment>
+                                <![CDATA[]]>
+                            </comment>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </app_secret>
+                    </fields>
+                </soundcloud>
 			</groups>
 		</devils_auth>
 	</sections>

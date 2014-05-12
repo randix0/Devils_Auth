@@ -52,6 +52,14 @@ Auth = {
         return Auth.popup(url, '/auth/index/step2/handler/google/'+reason);
 
     },
+    soundcloud: function(reason) {
+        if(typeof(reason) == 'undefined')
+            reason = '';
+
+        var url='https://soundcloud.com/connect?state=' + auth_state +'&client_id='+sc_app_id+'&response_type=code&scope=non-expiring&display=popup;&redirect_uri='+encodeURIComponent('http://'+location.host+'/auth/index/step1/handler/soundcloud/'+reason);
+
+        return Auth.popup(url, '/auth/index/step2/handler/soundcloud/'+reason);
+    },
     linkedin: function(reason) {
         if(typeof(reason) == 'undefined')
             reason = '';
