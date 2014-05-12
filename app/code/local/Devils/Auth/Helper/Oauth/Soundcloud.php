@@ -9,7 +9,7 @@ class Devils_Auth_Helper_Oauth_Soundcloud extends Devils_Auth_Helper_Oauth_Abstr
      */
     public function __construct()
     {
-        $config = Mage::getConfig()->getNode(self::XML_PATH_DEVILS_AUTH . 'facebook')->asArray();
+        $config = Mage::getConfig()->getNode(self::XML_PATH_DEVILS_AUTH . 'soundcloud')->asArray();
         $this->app_id		= $config['app_id'];
         $this->app_secret	= $config['app_secret'];
 
@@ -38,21 +38,21 @@ class Devils_Auth_Helper_Oauth_Soundcloud extends Devils_Auth_Helper_Oauth_Abstr
 
             $response = NULL;
 
-            $url = 'https://api.soundcloud.com/me.json?access_token='.$this->oa_access_token;
-
-            $contents = $this->_curlResponse($url);
+            $url = 'https://api.soundcloud.com/me.json';
+            $data = array(
+                'oauth_token' => $this->oa_access_token
+            );
+            $contents = $this->_curlResponse($url, $data);
 
             if($contents) {
-
                 $response = json_decode($contents, true);
-
                 if(isset($response['id']) && $response['id']) {
                     $this->user_data_response = $response;
                 } else {
-                    throw new Exception('Get user data failed', CONNECTION_ERROR);
+                    throw new Exception('Get user data failed');
                 }
             } else {
-                throw new Exception('Connection error', CONNECTION_ERROR);
+                throw new Exception('Connection error');
             }
 
         }
@@ -135,7 +135,7 @@ class Devils_Auth_Helper_Oauth_Soundcloud extends Devils_Auth_Helper_Oauth_Abstr
         if($response) {
             $this->oa_user_id = $response['id'];
             $fullName = $response['full_name'];
-            $name = exclude(' ', $fullName);
+            $name = explode(' ', $fullName);
 
             return array(
                 'first_name'		=> $name[0],

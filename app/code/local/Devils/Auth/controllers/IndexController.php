@@ -76,8 +76,6 @@ class Devils_Auth_IndexController extends Mage_Core_Controller_Front_Action
             setcookie('sl', 1, 0 , '/');
             echo '<script type="text/javascript">window.close();</script>';
         }
-        //$response =
-        //echo 'step1' . $handlerId . 'code = ' . $code;
     }
 
     public function step2Action()
@@ -98,47 +96,125 @@ class Devils_Auth_IndexController extends Mage_Core_Controller_Front_Action
             $this->_getSession()->setData('customer_id', $customer->getId());
             $result['status'] = 1;
         } else {
-            $oauthEmail = false;
             if (isset($oauthData['email']) && !empty($oauthData['email'])) {
                 $oauthEmail = $oauthData['email'];
-            }
-            $customer = $this->_getHelper()->getCustomerByAttribute('email', $oauthEmail);
-            if ($oauthEmail && $customer) {
-                $customerData = array(
-                    $handlerId . '_id' => $oauthResponse['oa_user_id'],
-                    $handlerId . '_oa_access_token' => $oauthResponse['oa_access_token'],
-                    $handlerId . '_oa_valid_till' => $oauthResponse['oa_valid_till']
-                );
-                $customer->addData($customerData);
-                $customer->save();
-                $session->setCustomerAsLoggedIn($customer);
-                $result['status'] = 1;
+                $customer = $this->_getHelper()->getCustomerByAttribute('email', $oauthEmail);
+                if ($oauthEmail && $customer) {
+                    $customerData = array(
+                        $handlerId . '_id' => $oauthResponse['oa_user_id'],
+                        $handlerId . '_oa_access_token' => $oauthResponse['oa_access_token'],
+                        $handlerId . '_oa_valid_till' => $oauthResponse['oa_valid_till']
+                    );
+                    $customer->addData($customerData);
+                    $customer->save();
+                    $session->setCustomerAsLoggedIn($customer);
+                    $result['status'] = 1;
+                } else {
+                    $customerData = array(
+                        'firstname' => $oauthData['first_name'],
+                        'lastname' => $oauthData['last_name'],
+                        'email' => $oauthData['email'],
+                        $handlerId . '_id' => $oauthResponse['oa_user_id'],
+                        $handlerId . '_oa_access_token' => $oauthResponse['oa_access_token'],
+                        $handlerId . '_oa_valid_till' => $oauthResponse['oa_valid_till']
+                    );
+
+                    try {
+                        $customer = Mage::getModel('customer/customer');
+                        $customer->setData($customerData);
+                        $customer->save();
+                        $session->setCustomerAsLoggedIn($customer);
+                        $result['status'] = 1;
+                    } catch (Mage_Core_Exception $e) {
+                        Mage::logException($e);
+                        $result['status'] = 0;
+                    }
+                }
             } else {
                 $customerData = array(
                     'firstname' => $oauthData['first_name'],
                     'lastname' => $oauthData['last_name'],
-                    'email' => $oauthData['email'],
-                    $handlerId . '_id' => $oauthResponse['oa_user_id'],
-                    $handlerId . '_oa_access_token' => $oauthResponse['oa_access_token'],
-                    $handlerId . '_oa_valid_till' => $oauthResponse['oa_valid_till']
+                    'handler_id' => $handlerId,
+                    'oa_id' => $oauthResponse['oa_user_id'],
+                    'oa_access_token' => $oauthResponse['oa_access_token'],
+                    'oa_valid_till' => $oauthResponse['oa_valid_till']
                 );
 
-                try {
-                    $customer = Mage::getModel('customer/customer');
-                    $customer->setData($customerData);
-                    $customer->save();
-                    $session->setCustomerAsLoggedIn($customer);
-                    $result['status'] = 1;
-                } catch (Mage_Core_Exception $e) {
-                    Mage::logException($e);
-                    $result['status'] = 0;
-                }
+                $this->_getCustomerSession()->setCustomerFormData($customerData);
+                $result['url'] = Mage::getUrl('auth/index/register');
+                $result['status'] = 2;
             }
-
-            //$customer = Mage::getModel('customer/customer')->loadByEmail($oauthData['email']);
-            //echo 'Register as ' . $oauthData['first_name'] . ' ' . $oauthData['last_name'];
-            //$this->_getHelper()->registerCustomer($oauthData);
         }
         echo json_encode($result);
+    }
+
+    public function registerAction()
+    {
+        if ($this->_getCustomerSession()->isLoggedIn()) {
+            $this->_redirect('*/*');
+            return;
+        }
+        $this->loadLayout();
+        $this->_initLayoutMessages('customer/session');
+        $this->renderLayout();
+    }
+
+    public function registerPostAction()
+    {
+        /** @var $session Mage_Customer_Model_Session */
+        $session = $this->_getCustomerSession();
+        if ($session->isLoggedIn()) {
+            $this->_redirect('*/*/');
+            return;
+        }
+
+        if (!$this->_validateFormKey()) {
+            return $this->_redirect('*/*/register');
+        }
+
+        $session->setEscapeMessages(true); // prevent XSS injection in user input
+        if (!$this->getRequest()->isPost()) {
+            $errUrl = Mage::getUrl('*/*/register', array('_secure' => true));
+            $this->_redirectError($errUrl);
+            return;
+        }
+
+        if ($this->getRequest()->isPost()) {
+            $formData = $this->getRequest()->getPost();
+            $customerData = array(
+                'firstname' => $formData['firstname'],
+                'lastname' => $formData['lastname'],
+                'email' => $formData['email'],
+                $formData['handler_id'] . '_id' => $formData['oa_id'],
+                $formData['handler_id'] . '_oa_access_token' => $formData['oa_access_token'],
+                $formData['handler_id'] . '_oa_valid_till' => $formData['oa_valid_till'],
+            );
+
+            try {
+                $customer = Mage::getModel('customer/customer');
+                $customer->setData($customerData);
+                $customer->save();
+                if ($customer->getId() > 0) {
+                    $session->setCustomerAsLoggedIn($customer);
+                }
+                $this->_redirect('customer/accou nt/');
+            } catch (Mage_Core_Exception $e) {
+                $session->setCustomerFormData($this->getRequest()->getPost());
+                if ($e->getCode() === Mage_Customer_Model_Customer::EXCEPTION_EMAIL_EXISTS) {
+                    $url = Mage::getUrl('customer/account/forgotpassword');
+                    $message = $this->__('There is already an account with this email address. If you are sure that it is your email address, <a href="%s">click here</a> to get your password and access your account.', $url);
+                    $session->setEscapeMessages(false);
+                } else {
+                    $message = $e->getMessage();
+                }
+                $session->addError($message);
+            } catch (Exception $e) {
+                $session->setCustomerFormData($this->getRequest()->getPost())
+                    ->addException($e, $this->__('Cannot save the customer.'));
+            }
+
+            $errUrl = Mage::getUrl('*/*/register', array('_secure' => true));
+            $this->_redirectError($errUrl);
+        }
     }
 }

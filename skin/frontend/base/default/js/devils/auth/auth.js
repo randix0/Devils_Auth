@@ -117,11 +117,17 @@ Auth = {
                 success: function(data) {
                     console.log('Auth.authCallback ajax data.status='+data.status);
                     Window.removeLoadingIndicator();
-                    if(data.status == 3)
+                    if(data.status == 3) {
                         Window.create({'header':data.header, 'body': data.body}, 'win-social-signup-msg');
-                    else if(data.status == 2)
-                        Window.create({'header':data.header, 'body': data.body}, 'win-signup-social');
-                    else if(data.status == 1) {
+                    } else if(data.status == 2){
+                        if (typeof(data.url) != 'undefined' && data.url) {
+                            window.location = data.url;
+                        } else if (typeof(data.header) != 'undefined' && data.header && typeof(data.body) != 'undefined' && data.body) {
+                            Window.create({'header':data.header, 'body': data.body}, 'win-signup-social');
+                        } else {
+                            return false;
+                        }
+                    } else if(data.status == 1) {
                         if (Auth.forceStop){
                             Auth.forceStop = null;
                             Auth.successful = 1;

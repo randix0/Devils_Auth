@@ -25,4 +25,9 @@
             <block type="devils_auth/auth" before="-" template="devils/auth/auth_buttons.phtml"></block>
         </reference>
     </customer_account_login>
+    <devils_auth_index_register>
+        <reference name="content">
+            <block type="devils_auth/auth" template="devils/auth/register.phtml"></block>
+        </reference>
+    </devils_auth_index_register>
 </layout>
