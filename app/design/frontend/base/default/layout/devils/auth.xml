@@ -17,17 +17,17 @@
                 <type>skin_js</type>
                 <name>js/devils/auth/window.js</name>
             </action>
-            <block type="devils_auth/auth" template="devils/auth/js.phtml"></block>
+            <block type="devils_auth/auth" name="devils.auth.js" template="devils/auth/js.phtml" />
         </reference>
     </default>
     <customer_account_login>
         <reference name="content">
-            <block type="devils_auth/auth" before="-" template="devils/auth/auth_buttons.phtml"></block>
+            <block type="devils_auth/auth" before="-" template="devils/auth/auth_buttons.phtml" />
         </reference>
     </customer_account_login>
     <devils_auth_index_register>
         <reference name="content">
-            <block type="devils_auth/auth" template="devils/auth/register.phtml"></block>
+            <block type="devils_auth/auth" template="devils/auth/register.phtml"/>
         </reference>
     </devils_auth_index_register>
 </layout>
