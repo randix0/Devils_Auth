@@ -1,7 +1,7 @@
 <script type="text/javascript">
-    var fb_app_id = '<?php echo $this->getAppId('facebook')?>';
-    var vk_app_id = '<?php echo $this->getAppId('vkontakte')?>';
-    var gl_app_id = '<?php echo $this->getAppId('google')?>';
-    var sc_app_id = '<?php echo $this->getAppId('soundcloud')?>';
+    <?php if ($this->isAuthHandlerEnabled('facebook')): ?>var fb_app_id = '<?php echo $this->getAppId('facebook')?>'; <?php endif; ?>
+    <?php if ($this->isAuthHandlerEnabled('vkontakte')): ?>var vk_app_id = '<?php echo $this->getAppId('vkontakte')?>'; <?php endif; ?>
+    <?php if ($this->isAuthHandlerEnabled('google')): ?>var gl_app_id = '<?php echo $this->getAppId('google')?>'; <?php endif; ?>
+    <?php if ($this->isAuthHandlerEnabled('soundcloud')): ?>var sc_app_id = '<?php echo $this->getAppId('soundcloud')?>'; <?php endif; ?>
     var auth_state = '<?php echo $this->getState()?>';
 </script>

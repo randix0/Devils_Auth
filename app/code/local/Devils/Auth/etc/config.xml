@@ -95,18 +95,22 @@
                 <display>0</display>
             </general>
             <facebook>
+                <enabled>0</enabled>
                 <app_id></app_id>
                 <app_secret></app_secret>
             </facebook>
             <google>
+                <enabled>0</enabled>
                 <app_id></app_id>
                 <app_secret></app_secret>
             </google>
             <vkontakte>
+                <enabled>0</enabled>
                 <app_id></app_id>
                 <app_secret></app_secret>
             </vkontakte>
             <soundcloud>
+                <enabled>0</enabled>
                 <app_id></app_id>
                 <app_secret></app_secret>
             </soundcloud>

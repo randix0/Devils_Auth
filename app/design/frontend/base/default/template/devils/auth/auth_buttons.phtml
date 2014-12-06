@@ -1,7 +1,19 @@
+<?php
+
+if ($this->isAuthEnabled()) {  ?>
 <div class="devils-auth">
     <div class="devils-auth-notice">Login via</div>
-    <a title="Login via Facebook" class="devils-auth-btn fb" onclick="Auth.facebook();"><i></i></a>
+    <?php if ($this->isAuthHandlerEnabled('facebook')): ?>
+        <a title="Login via Facebook" class="devils-auth-btn fb" onclick="Auth.facebook();"><i></i></a>
+    <?php endif; ?>
+    <?php if ($this->isAuthHandlerEnabled('vkontakte')): ?>
     <a title="Login via VKontakte" class="devils-auth-btn vk" onclick="Auth.vkontakte();"><i></i></a>
+    <?php endif; ?>
+    <?php if ($this->isAuthHandlerEnabled('google')): ?>
     <a title="Login via Google+" class="devils-auth-btn gl" onclick="Auth.google();"><i></i></a>
+    <?php endif; ?>
+    <?php if ($this->isAuthHandlerEnabled('soundcloud')): ?>
     <a title="Login via SoundCloud" class="devils-auth-btn sc" onclick="Auth.soundcloud();"><i></i></a>
+    <?php endif; ?>
 </div>
+<?php } ?>
