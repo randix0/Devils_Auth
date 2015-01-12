@@ -5,10 +5,12 @@
             <action method="addCss">
                 <stylesheet>css/devils/auth/window.css</stylesheet>
             </action>
+            <!--
             <action method="addItem">
                 <type>skin_js</type>
                 <name>js/devils/auth/jquery-1.11.0.min.js</name>
             </action>
+            -->
             <action method="addItem">
                 <type>skin_js</type>
                 <name>js/devils/auth/auth.js</name>
